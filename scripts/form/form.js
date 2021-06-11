@@ -10,9 +10,30 @@ function init() {
   setExpiryDateMask();
   document.querySelector(".pay").addEventListener("click", checkTextValidity);
 
-  document.querySelector(".pay").addEventListener("click", checkTextValidity);
   showButtonWhenValid();
   showPaymentAmount();
+  removeDefaultValidation();
+  setValidityRules();
+}
+
+function removeDefaultValidation() {
+  document.querySelector("form").setAttribute("novalidate", true);
+}
+
+function setValidityRules() {
+  const cardholder = document.querySelector("#cardholder_name");
+  const cardnumber = document.querySelector("#cardnumber");
+  const expiry_date = document.querySelector("#expiry_date");
+  const cvv = document.querySelector("#cvv");
+
+  cardnumber.onblur = function () {
+    if (cardnumber.validity.tooShort) {
+      console.log("is too short");
+    }
+  };
+
+  console.log(cardholder);
+  console.log(cardnumber);
 }
 
 function showPaymentAmount() {

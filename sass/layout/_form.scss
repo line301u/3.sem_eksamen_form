@@ -23,6 +23,7 @@
       margin: 5px 0 20px;
       padding: 0 10px;
     }
+
     .formgroup {
       display: flex;
       input {
@@ -32,6 +33,7 @@
         float: right;
       }
     }
+
     label {
       margin-left: 1.5px;
       font-weight: 300;
@@ -66,5 +68,26 @@
   }
   input::placeholder {
     opacity: 0.4;
+    font-size: 13px;
   }
+}
+
+.error_message {
+  display: none;
+}
+
+#cardholder_name:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
+  display: block;
+}
+
+#cardnumber:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
+  display: block;
+}
+
+#expiry_date:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
+  display: block;
+}
+
+#cvv:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
+  display: block;
 }
