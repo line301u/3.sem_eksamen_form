@@ -21,19 +21,23 @@ function removeDefaultValidation() {
 }
 
 function setValidityRules() {
-  const cardholder = document.querySelector("#cardholder_name");
-  const cardnumber = document.querySelector("#cardnumber");
-  const expiry_date = document.querySelector("#expiry_date");
-  const cvv = document.querySelector("#cvv");
-
-  cardnumber.onblur = function () {
-    if (cardnumber.validity.tooShort) {
-      console.log("is too short");
-    }
-  };
-
-  console.log(cardholder);
-  console.log(cardnumber);
+  // const cardholder = document.querySelector("#cardholder_name");
+  // const cardnumber = document.querySelector("#cardnumber");
+  // const expiry_date = document.querySelector("#expiry_date");
+  // const cvv = document.querySelector("#cvv");
+  // cardnumber.onblur = function () {
+  //   if (cardnumber.validity.tooShort) {
+  //     cardnumber.nextElementSibling.textContent = "too short";
+  //   } else {
+  //     cardnumber.nextElementSibling.textContent = "Please fill out the correct information";
+  //   }
+  // };
+  // expiry_date.onblur = function () {
+  //   console.log(expiry_date.validity);
+  //   if (expiry_date.validity.tooShort) {
+  //     expiry_date.nextElementSibling.textContent = "too short";
+  //   }
+  // };
 }
 
 function showPaymentAmount() {
@@ -65,6 +69,22 @@ async function checkTextValidity() {
 
     window.location.href = `process.html?id=${orderid}`;
   } else {
+    document.querySelectorAll("input").forEach((element) => {
+      console.log(element.validity);
+
+      if (element.validity.valueMissing) {
+        element.nextElementSibling.style.display = "block";
+
+        element.addEventListener("keyup", checkInput);
+
+        function checkInput() {
+          if (!element.validity.valueMissing) {
+            element.nextElementSibling.style.display = null;
+          }
+        }
+      }
+    });
+
     console.log("form is not valid");
   }
 }
