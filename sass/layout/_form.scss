@@ -20,7 +20,7 @@
       width: 300px;
       height: 35px;
       border-radius: 5px;
-      margin: 5px 0 20px;
+      margin: 5px 0 25px;
       padding: 0 10px;
     }
 
@@ -55,6 +55,33 @@
   }
 }
 
+.input-wrapper {
+  position: relative;
+}
+.error_message {
+  display: none;
+
+  position: absolute;
+  top: 65px;
+  right: 0;
+  text-align: end;
+}
+
+.formgroup {
+  .error_message {
+    // bottom: -18px;
+  }
+
+  > div:nth-child(1) > span {
+    width: 120px;
+    left: 0;
+  }
+}
+
+#expiry_date ~ #tick {
+  right: 13px;
+}
+
 //validation
 
 #form_body {
@@ -62,8 +89,13 @@
     outline: none;
     box-shadow: 0 0 0 1px vars.$dark_green;
   }
+  input:not(:focus):not(:placeholder-shown):invalid {
+    outline: none;
+    box-shadow: 0 0 0 1px tomato;
+  }
   input[type="text"]:focus {
     outline: none;
+    background-color: vars.$bg_color;
     box-shadow: 0 0 0 1px vars.$ui_color_dark;
   }
   input::placeholder {
@@ -72,22 +104,47 @@
   }
 }
 
-.error_message {
-  display: none;
-}
-
-#cardholder_name:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
+input:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
   display: block;
 }
 
-#cardnumber:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
-  display: block;
+// validation symbol
+
+.circ {
+  opacity: 0;
+  stroke-dasharray: 130;
+  stroke-dashoffset: 130;
+  -webkit-transition: all 0.9s;
+  -moz-transition: all 0.9s;
+  -ms-transition: all 0.9s;
+  -o-transition: all 0.9s;
+  transition: all 0.9s;
+}
+.tick {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  -webkit-transition: stroke-dashoffset 0.9s 0.4s ease-out;
+  -moz-transition: stroke-dashoffset 0.9s 0.4s ease-out;
+  -ms-transition: stroke-dashoffset 0.9s 0.4s ease-out;
+  -o-transition: stroke-dashoffset 0.9s 0.4s ease-out;
+  transition: stroke-dashoffset 0.9s 0.4s ease-out;
+}
+.drawn + svg .path {
+  opacity: 1;
+  stroke-dashoffset: 0;
 }
 
-#expiry_date:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
-  display: block;
+#tick {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 33px;
+  right: -30px;
 }
 
-#cvv:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
-  display: block;
+.preload * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
 }

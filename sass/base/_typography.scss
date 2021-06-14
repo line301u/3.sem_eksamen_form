@@ -126,6 +126,13 @@ input {
   color: black;
 }
 
+.error_message {
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  color: tomato;
+  letter-spacing: -0.01rem;
+}
+
 .payment_options p {
   font-size: 10px;
   color: vars.$ui_color_dark;
