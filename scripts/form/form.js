@@ -34,6 +34,7 @@ function showPaymentAmount() {
 function checkFormValidity() {
   document.querySelectorAll("form input").forEach((input) => {
     input.addEventListener("keyup", showWhenValid);
+    input.addEventListener("keyup", checkInputValue);
 
     //show button when valid
     function showWhenValid() {
@@ -44,13 +45,22 @@ function checkFormValidity() {
       }
 
       input.addEventListener("blur", () => {
+        console.log(input.validity);
         //add valid symbol when valid
         if (input.checkValidity()) {
-          this.nextElementSibling.classList.add("drawn");
-          console.log(this.nextElementSibling);
-          //remoce valid symbol when valid
-        } else {
-          this.nextElementSibling.classList.remove("drawn");
+          console.log(`valid_symbol_${input.id}`);
+          document.querySelector(`.invalid_symbol_${input.id}`).classList.remove("drawn");
+          document.querySelector(`.valid_symbol_${input.id}`).classList.add("drawn");
+
+          //remove valid symbol when valid
+        } else if (!input.checkValidity()) {
+          document.querySelector(`.valid_symbol_${input.id}`).classList.remove("drawn");
+        }
+
+        if (input.validity.valueMissing) {
+          document.querySelector(`.invalid_symbol_${input.id}`).classList.remove("drawn");
+        } else if (!input.validity.valueMissing && !input.checkValidity()) {
+          document.querySelector(`.invalid_symbol_${input.id}`).classList.add("drawn");
         }
       });
     }
@@ -75,17 +85,17 @@ async function checkTextValidity() {
 
 function addInvaldidStyling() {
   document.querySelectorAll("input").forEach((inputValue) => {
-    console.log(inputValue);
     //value missing -> add styling
     if (inputValue.validity.valueMissing) {
-      inputValue.nextElementSibling.nextElementSibling.nextElementSibling.style.display = "block";
-      inputValue.style.boxShadow = "0 0 0 1px tomato";
+      inputValue.nextElementSibling.style.display = "block";
+      inputValue.style.boxShadow = "0 0 0 1px #f85229";
+      document.querySelector(`.invalid_symbol_${inputValue.id}`).classList.add("drawn");
 
       inputValue.addEventListener("keyup", checkInput);
       //value not missing -> remove styling
       function checkInput() {
         if (!inputValue.validity.valueMissing) {
-          inputValue.nextElementSibling.nextElementSibling.nextElementSibling.style.display = null;
+          inputValue.nextElementSibling.style.display = null;
           inputValue.style.boxShadow = null;
         }
       }
@@ -122,4 +132,25 @@ function setExpiryDateMask() {
     mask: "00/00",
   };
   const expiry_dateMask = IMask(expiry_date, expiryDateOption);
+}
+
+function checkInputValue() {
+  //move focus if valid
+  const inputValue = this.value.length;
+  const maxLength = parseInt(this.getAttribute("maxlength"));
+
+  if (inputValue === maxLength && this.checkValidity()) {
+    switchToNextInput(this);
+  }
+}
+
+function switchToNextInput(currentInput) {
+  if (currentInput.name === "Cardnumber") {
+    console.log(currentInput.parentElement.nextElementSibling);
+    document.querySelector("#expiry_date").focus();
+  } else if (currentInput.name === "Expiry Date") {
+    document.querySelector("#cvv").focus();
+  } else if (currentInput.name === "CVV") {
+    currentInput.blur();
+  }
 }

@@ -78,7 +78,8 @@
   }
 }
 
-#expiry_date ~ #tick {
+#expiry_date ~ #tick,
+#expiry_date ~ #cross {
   right: 13px;
 }
 
@@ -91,7 +92,7 @@
   }
   input:not(:focus):not(:placeholder-shown):invalid {
     outline: none;
-    box-shadow: 0 0 0 1px tomato;
+    box-shadow: 0 0 0 1px vars.$red;
   }
   input[type="text"]:focus {
     outline: none;
@@ -134,12 +135,17 @@ input:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
   stroke-dashoffset: 0;
 }
 
-#tick {
+#tick,
+#cross {
   width: 20px;
   height: 20px;
   position: absolute;
   top: 33px;
   right: -30px;
+}
+
+#tick {
+  z-index: 1;
 }
 
 .preload * {
