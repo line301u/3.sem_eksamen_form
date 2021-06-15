@@ -157,3 +157,16 @@ input:not(:focus):not(:placeholder-shown):invalid ~ .error_message {
   -ms-transition: none !important;
   -o-transition: none !important;
 }
+
+.cardtype_symbol {
+  width: 50px;
+  height: auto;
+  // display: none;
+  opacity: 0;
+
+  position: absolute;
+  top: 30.5px;
+  right: 5px;
+
+  transition: 0.5s;
+}
