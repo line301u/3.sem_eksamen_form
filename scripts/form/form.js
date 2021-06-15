@@ -141,11 +141,13 @@ function checkInputValue() {
 }
 
 function switchToNextInput(currentInput) {
-  if (currentInput.name === "Cardnumber") {
+  const form = document.querySelector("form");
+
+  if (currentInput.name === "Cardnumber" && !form.checkValidity()) {
     document.querySelector("#expiry_date").focus();
-  } else if (currentInput.name === "Expiry Date") {
+  } else if (currentInput.name === "Expiry Date" && !form.checkValidity()) {
     document.querySelector("#cvv").focus();
-  } else if (currentInput.name === "CVV") {
+  } else if (currentInput.name === "CVV" || form.checkValidity()) {
     currentInput.blur();
   }
 }
