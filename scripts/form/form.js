@@ -1,5 +1,6 @@
 import "../../sass/index.scss";
 import IMask from "imask";
+import { getCardType } from "./creditcardtype";
 
 ("use strict");
 
@@ -38,6 +39,8 @@ function checkFormValidity() {
 
     //show button when valid
     function showWhenValid() {
+      document.querySelector(`.invalid_symbol_${input.id}`).classList.remove("drawn");
+
       if (document.querySelector("form").checkValidity()) {
         document.querySelector(".pay").style.opacity = 1;
       } else {
@@ -45,10 +48,8 @@ function checkFormValidity() {
       }
 
       input.addEventListener("blur", () => {
-        console.log(input.validity);
         //add valid symbol when valid
         if (input.checkValidity()) {
-          console.log(`valid_symbol_${input.id}`);
           document.querySelector(`.invalid_symbol_${input.id}`).classList.remove("drawn");
           document.querySelector(`.valid_symbol_${input.id}`).classList.add("drawn");
 
@@ -84,18 +85,22 @@ async function checkTextValidity() {
 }
 
 function addInvaldidStyling() {
-  document.querySelectorAll("input").forEach((inputValue) => {
+  const allInputs = document.querySelectorAll("input");
+  findFirstInvalidInput(allInputs);
+
+  allInputs.forEach((inputValue) => {
     //value missing -> add styling
     if (inputValue.validity.valueMissing) {
-      inputValue.nextElementSibling.style.display = "block";
+      inputValue.nextElementSibling.style.opacity = 1;
       inputValue.style.boxShadow = "0 0 0 1px #f85229";
       document.querySelector(`.invalid_symbol_${inputValue.id}`).classList.add("drawn");
 
       inputValue.addEventListener("keyup", checkInput);
+
       //value not missing -> remove styling
       function checkInput() {
         if (!inputValue.validity.valueMissing) {
-          inputValue.nextElementSibling.style.display = null;
+          inputValue.nextElementSibling.style.opacity = null;
           inputValue.style.boxShadow = null;
         }
       }
@@ -118,20 +123,11 @@ async function postOrder() {
   return data.id;
 }
 
-function setCardNumberMask() {
-  const cardnumber = document.querySelector("#cardnumber");
-  const cardnumberOption = {
-    mask: "0000 0000 0000 0000",
-  };
-  const cardnumberMask = IMask(cardnumber, cardnumberOption);
-}
+//find first invalid input
+function findFirstInvalidInput(allInputs) {
+  const firstInvalidInput = Array.from(allInputs).find((invalidInput) => !invalidInput.checkValidity());
 
-function setExpiryDateMask() {
-  const expiry_date = document.querySelector("#expiry_date");
-  const expiryDateOption = {
-    mask: "00/00",
-  };
-  const expiry_dateMask = IMask(expiry_date, expiryDateOption);
+  firstInvalidInput.focus();
 }
 
 function checkInputValue() {
@@ -146,11 +142,40 @@ function checkInputValue() {
 
 function switchToNextInput(currentInput) {
   if (currentInput.name === "Cardnumber") {
-    console.log(currentInput.parentElement.nextElementSibling);
     document.querySelector("#expiry_date").focus();
   } else if (currentInput.name === "Expiry Date") {
     document.querySelector("#cvv").focus();
   } else if (currentInput.name === "CVV") {
     currentInput.blur();
   }
+}
+
+function setCardNumberMask() {
+  const cardnumber = document.querySelector("#cardnumber");
+  const cardnumberOption = {
+    mask: "0000 0000 0000 0000",
+  };
+
+  const cardnumberMask = IMask(cardnumber, cardnumberOption);
+
+  // get cardnumber input
+  document.querySelector("#cardnumber").addEventListener("input", getUnmaskedCardnumberInput);
+
+  function getUnmaskedCardnumberInput() {
+    const cardnumberInput = cardnumberMask.unmaskedValue;
+    const cardtype = getCardType(cardnumberInput);
+    showCardType(cardtype);
+  }
+}
+
+function setExpiryDateMask() {
+  const expiry_date = document.querySelector("#expiry_date");
+  const expiryDateOption = {
+    mask: "00/00",
+  };
+  const expiry_dateMask = IMask(expiry_date, expiryDateOption);
+}
+
+function showCardType(cardtype) {
+  
 }
