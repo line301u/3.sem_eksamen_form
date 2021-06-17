@@ -34,11 +34,11 @@ function showPaymentAmount() {
 
 function checkFormValidity() {
   document.querySelectorAll("form input").forEach((input) => {
-    input.addEventListener("keyup", showWhenValid);
+    input.addEventListener("keyup", showWhenInputValidity);
     input.addEventListener("keyup", checkInputValue);
 
     //show button when valid
-    function showWhenValid() {
+    function showWhenInputValidity() {
       document.querySelector(`.invalid_symbol_${input.id}`).classList.remove("drawn");
 
       if (document.querySelector("form").checkValidity()) {
