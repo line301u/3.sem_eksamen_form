@@ -18,7 +18,7 @@ function init() {
   //prevent transtion on load
   setTimeout(() => {
     document.querySelector("body").classList.remove("preload");
-  }, 1000);
+  }, 500);
 }
 
 function removeDefaultValidation() {
