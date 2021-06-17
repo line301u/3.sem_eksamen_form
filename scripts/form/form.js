@@ -95,10 +95,10 @@ function addInvaldidStyling() {
       inputValue.style.boxShadow = "0 0 0 1px #f85229";
       document.querySelector(`.invalid_symbol_${inputValue.id}`).classList.add("drawn");
 
-      inputValue.addEventListener("keyup", checkInput);
+      inputValue.addEventListener("keyup", removeInvalidStyling);
 
       //value not missing -> remove styling
-      function checkInput() {
+      function removeInvalidStyling() {
         if (!inputValue.validity.valueMissing) {
           inputValue.nextElementSibling.style.opacity = null;
           inputValue.style.boxShadow = null;
