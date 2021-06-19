@@ -187,3 +187,4 @@ function showCardType(cardtype) {
     document.querySelector(".cardtype_symbol").src = `/${cardtype}.png`;
   }
 }
+
