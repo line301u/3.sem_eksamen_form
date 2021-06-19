@@ -181,6 +181,7 @@ function setExpiryDateMask() {
 function showCardType(cardtype) {
   if (cardtype === undefined) {
     document.querySelector(".cardtype_symbol").style.opacity = 0;
+    document.querySelector(".cardtype_symbol").innerHTML = "";
   } else {
     document.querySelector(".cardtype_symbol").style.opacity = 1;
     document.querySelector(".cardtype_symbol").src = `/${cardtype}.png`;
