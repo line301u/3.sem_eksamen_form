@@ -40,6 +40,7 @@ function checkFormValidity() {
     //show button when valid
     function showInputValidity() {
       document.querySelector(`.invalid_symbol_${input.id}`).classList.remove("drawn");
+      document.querySelector(`.valid_symbol_${input.id}`).classList.remove("drawn");
 
       if (document.querySelector("form").checkValidity()) {
         document.querySelector(".pay").style.opacity = 1;
@@ -181,7 +182,9 @@ function setExpiryDateMask() {
 function showCardType(cardtype) {
   if (cardtype === undefined) {
     document.querySelector(".cardtype_symbol").style.opacity = 0;
-    document.querySelector(".cardtype_symbol").src = "";
+    setTimeout(() => {
+      document.querySelector(".cardtype_symbol").src = "";
+    }, 300);
   } else {
     document.querySelector(".cardtype_symbol").style.opacity = 1;
     document.querySelector(".cardtype_symbol").src = `/${cardtype}.png`;
