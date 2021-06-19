@@ -184,7 +184,7 @@ function showCardType(cardtype) {
     document.querySelector(".cardtype_symbol").style.opacity = 0;
     setTimeout(() => {
       document.querySelector(".cardtype_symbol").src = "";
-    }, 300);
+    }, 500);
   } else {
     document.querySelector(".cardtype_symbol").style.opacity = 1;
     document.querySelector(".cardtype_symbol").src = `/${cardtype}.png`;
